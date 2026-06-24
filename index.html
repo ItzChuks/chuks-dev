@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chuks — Frontend Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            grotesk: ['Space Grotesk', 'sans-serif'],
+            inter: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            accent: '#6C63FF',
+            'accent-dim': 'rgba(108,99,255,0.15)',
+            'accent-glow': 'rgba(108,99,255,0.4)',
+          },
+          animation: {
+            'blink': 'blink 1s step-end infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'slide-up': 'slideUp 0.6s ease forwards',
+            'fade-in': 'fadeIn 0.8s ease forwards',
+          },
+          keyframes: {
+            blink: { '0%,100%': { opacity: 1 }, '50%': { opacity: 0 } },
+            float: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-12px)' } },
+            slideUp: { from: { opacity: 0, transform: 'translateY(30px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+            fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="font-inter bg-[#0A0A0F] dark:bg-[#0A0A0F] text-[#E8E8F0] transition-colors duration-500" id="body">
+
+  <!-- CANVAS BACKGROUND -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-4 nav-glass">
+    <a href="#hero" class="font-grotesk font-bold text-xl tracking-tight">
+      <span class="text-accent">&lt;</span>Chuks<span class="text-accent">/&gt;</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 font-inter text-sm font-medium">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <!-- Theme Toggle -->
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+        <span id="theme-icon">🌙</span>
+      </button>
+      <!-- Mobile Menu -->
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-accent-dim transition-colors">
+        <div class="hamburger-icon" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="fixed inset-0 z-40 hidden flex-col items-center justify-center mobile-menu-overlay">
+    <div class="flex flex-col items-center gap-8 text-2xl font-grotesk font-semibold">
+      <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()">About</a>
+      <a href="#skills" class="mobile-nav-link" onclick="closeMobileMenu()">Skills</a>
+      <a href="#projects" class="mobile-nav-link" onclick="closeMobileMenu()">Projects</a>
+      <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()">Contact</a>
+    </div>
+  </div>
+
+  <main class="relative z-10">
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section id="hero" class="min-h-screen flex flex-col items-center justify-center px-6 text-center pt-20">
+      <div class="hero-badge font-mono text-xs mb-6 opacity-0 animate-[fadeIn_0.8s_ease_0.2s_forwards]">
+        <span class="status-dot"></span> Available for work
+      </div>
+
+      <h1 class="font-grotesk font-bold text-5xl md:text-7xl lg:text-8xl leading-tight mb-4 opacity-0 animate-[slideUp_0.7s_ease_0.4s_forwards]">
+        Hi, I'm <span class="text-gradient">Chuks</span>
+      </h1>
+
+      <div class="flex items-center justify-center gap-2 mb-6 opacity-0 animate-[fadeIn_0.8s_ease_0.6s_forwards]">
+        <span class="font-mono text-accent text-xl md:text-2xl">$</span>
+        <span id="typed-role" class="font-grotesk text-xl md:text-2xl font-medium text-[#E8E8F0] dark:text-[#E8E8F0] light-text"></span>
+        <span class="font-grotesk text-xl md:text-2xl text-accent animate-blink">|</span>
+      </div>
+
+      <p class="max-w-xl text-sm md:text-base text-[#8888AA] dark:text-[#8888AA] light-subtext leading-relaxed mb-10 opacity-0 animate-[fadeIn_0.8s_ease_0.8s_forwards]">
+        4 years crafting high-performance web & mobile experiences. I turn complex ideas into elegant, pixel-perfect products.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 opacity-0 animate-[fadeIn_0.8s_ease_1s_forwards]">
+        <a href="#projects" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-outline">Let's Talk</a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-0 animate-[fadeIn_1s_ease_1.5s_forwards]">
+        <div class="scroll-indicator"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ ABOUT ═══════════════ -->
+    <section id="about" class="py-24 px-6 md:px-12 max-w-6xl mx-auto">
+      <div class="reveal-section grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="font-mono text-accent text-sm mb-3">// about me</p>
+          <h2 class="font-grotesk font-bold text-4xl md:text-5xl mb-6 leading-tight section-title">
+            Crafting Digital<br/>Experiences
+          </h2>
+          <p class="text-[#8888AA] dark:text-[#8888AA] light-subtext leading-relaxed mb-4">
+            I'm a frontend developer based in <span class="text-accent font-medium">Lagos, Nigeria</span>, with 4 years of hands-on experience building modern web and mobile applications. I specialize in creating seamless, performant user interfaces.
+          </p>
+          <p class="text-[#8888AA] dark:text-[#8888AA] light-subtext leading-relaxed mb-8">
+            Currently working as a <span class="text-[#E8E8F0] dark:text-[#E8E8F0] light-text font-medium">Front end developer at Nhames Projects Ltd</span>, I also take on freelance projects, building everything from dashboards to e-commerce platforms.
+          </p>
+          <div class="flex gap-4">
+            <a href="https://github.com/ItzChuks" class="social-icon" aria-label="GitHub" title="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/ogbatue-chuks-6553a4279/" class="social-icon" aria-label="LinkedIn" title="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://x.com/ItzChuks525994" class="social-icon" aria-label="Twitter/X" title="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="about-card">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="stat-card">
+                <span class="stat-number">4+</span>
+                <span class="stat-label">Years Experience</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number">20+</span>
+                <span class="stat-label">Projects Built</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number">10+</span>
+                <span class="stat-label">Happy Clients</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Lines of Code</span>
+              </div>
+            </div>
+            <div class="mt-6 p-4 rounded-xl bg-accent-dim border border-accent/20 font-mono text-xs">
+              <span class="text-[#6875A8]">const</span>
+              <span class="text-[#E8E8F0] dark:text-[#E8E8F0]"> developer</span>
+              <span class="text-accent"> = </span>
+              <span class="text-[#E8E8F0]">&#123;</span><br/>
+              &nbsp;&nbsp;<span class="text-[#A78BFA]">name</span><span class="text-[#E8E8F0]">: </span><span class="text-green-400">'Chuks'</span>,<br/>
+              &nbsp;&nbsp;<span class="text-[#A78BFA]">location</span><span class="text-[#E8E8F0]">: </span><span class="text-green-400">'Lagos, NG'</span>,<br/>
+              &nbsp;&nbsp;<span class="text-[#A78BFA]">passion</span><span class="text-[#E8E8F0]">: </span><span class="text-green-400">'building cool stuff'</span><br/>
+              <span class="text-[#E8E8F0]">&#125;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SKILLS ═══════════════ -->
+    <section id="skills" class="py-24 px-6 md:px-12 max-w-6xl mx-auto">
+      <div class="reveal-section">
+        <p class="font-mono text-accent text-sm mb-3">// tech stack</p>
+        <h2 class="font-grotesk font-bold text-4xl md:text-5xl mb-4 section-title">Skills &amp; Tools</h2>
+        <p class="text-[#8888AA] dark:text-[#8888AA] light-subtext mb-14 max-w-lg">Technologies I work with to build robust, scalable products.</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+
+          <div class="skill-group">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="skill-icon-box">🎨</div>
+              <h3 class="font-grotesk font-semibold text-lg">Frontend Development</h3>
+            </div>
+            <div class="space-y-4">
+              <div class="skill-item">
+                <div class="flex justify-between mb-2">
+                  <span class="font-mono text-sm">HTML / CSS / Bootstrap / Tailwind</span>
+                  <span class="font-mono text-accent text-sm">95%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="flex justify-between mb-2">
+                  <span class="font-mono text-sm">JavaScript (ES6+)</span>
+                  <span class="font-mono text-accent text-sm">90%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="flex justify-between mb-2">
+                  <span class="font-mono text-sm">React.js / Vue.js / Next.js / Angular</span>
+                  <span class="font-mono text-accent text-sm">85%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="skill-icon-box">📱</div>
+              <h3 class="font-grotesk font-semibold text-lg">Mobile & Backend</h3>
+            </div>
+            <div class="space-y-4">
+              <div class="skill-item">
+                <div class="flex justify-between mb-2">
+                  <span class="font-mono text-sm">React Native</span>
+                  <span class="font-mono text-accent text-sm">80%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="flex justify-between mb-2">
+                  <span class="font-mono text-sm">Node.js / Express.js</span>
+                  <span class="font-mono text-accent text-sm">78%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+              </div>
+              <div class="skill-item">
+                <div class="flex justify-between mb-2">
+                  <span class="font-mono text-sm">PHP / MySQL / Appwrite</span>
+                  <span class="font-mono text-accent text-sm">75%</span>
+                </div>
+                <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tech Badges -->
+        <div class="mt-14">
+          <p class="font-mono text-xs text-[#6666AA] mb-5">// also familiar with</p>
+          <div class="flex flex-wrap gap-3" id="tech-badges">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PROJECTS ═══════════════ -->
+    <section id="projects" class="py-24 px-6 md:px-12 max-w-6xl mx-auto">
+      <div class="reveal-section">
+        <p class="font-mono text-accent text-sm mb-3">// recent work</p>
+        <h2 class="font-grotesk font-bold text-4xl md:text-5xl mb-4 section-title">Projects</h2>
+        <p class="text-[#8888AA] dark:text-[#8888AA] light-subtext mb-14 max-w-lg">A selection of things I've built — from dashboards to mobile apps.</p>
+
+        <!-- Filter tabs -->
+        <div class="flex flex-wrap gap-3 mb-10" id="filter-tabs">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="React">React</button>
+          <button class="filter-btn" data-filter="Next.js">Next.js</button>
+          <button class="filter-btn" data-filter="Vue">Vue</button>
+          <button class="filter-btn" data-filter="Mobile">Mobile</button>
+        </div>
+
+        <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Loading placeholder -->
+          <div class="project-skeleton"></div>
+          <div class="project-skeleton"></div>
+          <div class="project-skeleton"></div>
+        </div>
+
+        <div id="no-projects" class="hidden text-center py-20">
+          <p class="text-[#8888AA] font-mono">// no projects found</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <section id="contact" class="py-24 px-6 md:px-12 max-w-4xl mx-auto">
+      <div class="reveal-section text-center">
+        <p class="font-mono text-accent text-sm mb-3">// get in touch</p>
+        <h2 class="font-grotesk font-bold text-4xl md:text-5xl mb-6 section-title">Let's Build Together</h2>
+        <p class="text-[#8888AA] dark:text-[#8888AA] light-subtext mb-10 max-w-md mx-auto leading-relaxed">
+          Whether you have a project in mind or just want to connect — my inbox is always open.
+        </p>
+        <a href="https://mail.google.com/mail/?view=cm&to=itzchuks1@gmail.com" target="_blank" class="btn-primary text-lg px-8 py-4 inline-block mb-12">
+  Say Hello →
+</a>
+
+        <div class="grid grid-cols-3 gap-4 max-w-sm mx-auto">
+          <a href="https://github.com/ItzChuks" class="contact-card" title="GitHub">
+            <svg class="mx-auto mb-2" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span class="text-xs font-mono">GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/ogbatue-chuks-6553a4279/" class="contact-card" title="LinkedIn">
+            <svg class="mx-auto mb-2" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <span class="text-xs font-mono">LinkedIn</span>
+          </a>
+          <a href="https://x.com/ItzChuks525994" class="contact-card" title="Twitter">
+            <svg class="mx-auto mb-2" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span class="text-xs font-mono">Twitter</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="relative z-10 text-center py-8 border-t border-white/5">
+    <p class="font-mono text-xs text-[#44445A]">
+      Designed &amp; Built by <span class="text-accent">Chuks</span> · <span id="footer-year"></span>
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="appwrite.js"></script>
+  <script src="projects.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

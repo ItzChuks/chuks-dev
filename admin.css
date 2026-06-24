@@ -1,0 +1,591 @@
+/* ===========================
+   admin.css — Fully Responsive
+   =========================== */
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── LOGIN ── */
+#login-screen {
+  background: var(--bg);
+  padding: 16px;
+}
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 32px 24px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+}
+.login-card::before {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(108,99,255,0.3), transparent);
+  z-index: -1;
+}
+
+/* ── MOBILE TOP NAV (replaces sidebar on mobile) ── */
+.admin-topbar {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-topbar-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.admin-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hamburger-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+.hamburger-admin span {
+  display: block;
+  width: 20px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ── MOBILE DRAWER ── */
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+}
+.mobile-drawer.open { display: block; }
+.drawer-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+}
+.drawer-panel {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 260px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  padding-top: 60px;
+}
+.mobile-drawer.open .drawer-panel {
+  transform: translateX(0);
+}
+.drawer-nav {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.drawer-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── SIDEBAR (desktop) ── */
+.admin-sidebar {
+  width: 220px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: var(--subtext);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+}
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+}
+
+/* ── MAIN LAYOUT ── */
+.admin-main {
+  margin-left: 220px;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  backdrop-filter: blur(20px);
+  gap: 12px;
+}
+
+.admin-panel {
+  padding: 24px 28px;
+  max-width: 960px;
+}
+
+/* ── FORM CARD ── */
+.add-form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--subtext);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.field-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  outline: none;
+  width: 100%;
+}
+.field-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+}
+.field-input::placeholder {
+  color: var(--subtext);
+  opacity: 0.6;
+}
+
+.image-drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.image-drop-zone:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+.image-drop-zone.has-image {
+  border-style: solid;
+  border-color: rgba(108,99,255,0.3);
+}
+
+/* ── PROJECT LIST ITEMS ── */
+.admin-project-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.2s;
+}
+.admin-project-item:hover {
+  border-color: rgba(108,99,255,0.3);
+}
+.admin-project-thumb {
+  width: 52px; height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--surface2);
+  flex-shrink: 0;
+}
+.admin-project-thumb-placeholder {
+  width: 52px; height: 40px;
+  border-radius: 8px;
+  background: var(--accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.admin-project-info {
+  flex: 1;
+  min-width: 0;
+}
+.admin-project-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin-project-tags {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--subtext);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+.admin-action-btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--subtext);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.admin-action-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── SKELETON ── */
+.admin-skeleton {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  height: 68px;
+  position: relative;
+  overflow: hidden;
+}
+.admin-skeleton::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── FORM ACTION BUTTONS ── */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  align-items: center;
+}
+.form-actions .delete-btn {
+  margin-left: auto;
+}
+
+/* ══════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════ */
+
+/* ── Large desktop (1280px+) ── */
+@media (min-width: 1280px) {
+  .admin-sidebar {
+    width: 240px;
+  }
+  .admin-main {
+    margin-left: 240px;
+  }
+  .admin-panel {
+    padding: 28px 36px;
+    max-width: 1080px;
+  }
+  .admin-header {
+    padding: 22px 36px;
+  }
+}
+
+/* ── Medium desktop (1024px–1279px) ── */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .admin-panel {
+    padding: 24px 28px;
+  }
+}
+
+/* ── Tablet landscape / small desktop (769px–1023px) ── */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .admin-sidebar {
+    width: 200px;
+  }
+  .admin-main {
+    margin-left: 200px;
+  }
+  .admin-panel {
+    padding: 20px 22px;
+  }
+  .admin-header {
+    padding: 16px 22px;
+  }
+  .add-form-card {
+    padding: 24px 20px;
+  }
+}
+
+/* ── Tablet portrait (max 768px) — hide sidebar, show topbar ── */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    width: 0 !important;
+  }
+  .admin-topbar { display: flex !important; }
+
+  .admin-main {
+    margin-left: 0 !important;
+    padding-top: 64px;
+    padding-bottom: 40px;
+  }
+
+  .admin-header {
+    padding: 12px 16px !important;
+    top: 64px !important;
+    gap: 10px;
+  }
+
+  .admin-header > div:first-child {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .admin-header h1 {
+    font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-header p {
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-panel {
+    padding: 16px;
+  }
+
+  .add-form-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  /* Stack all 2-col grids to 1 col */
+  .form-grid-2,
+  .form-grid-2[style] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Project list toolbar */
+  #panel-projects .flex.items-center.justify-between {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Project item action button always visible */
+  .admin-action-btn {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+  }
+
+  /* Form actions horizontal on tablet */
+  .form-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .form-actions .delete-btn {
+    margin-left: auto;
+  }
+}
+
+/* ── Mobile (max 600px) ── */
+@media (max-width: 600px) {
+  .form-grid-2,
+  .form-grid-2[style] {
+    grid-template-columns: 1fr !important;
+  }
+  .admin-topbar {
+    padding: 12px 14px;
+  }
+
+  .admin-main {
+    padding-top: 60px;
+  }
+
+  .admin-header {
+    top: 60px;
+    padding: 10px 14px;
+  }
+
+  .admin-panel {
+    padding: 12px 14px;
+  }
+
+  .add-form-card {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  .image-drop-zone {
+    padding: 22px 12px;
+  }
+
+  /* Tighten project items */
+  .admin-project-item {
+    padding: 12px 12px;
+    gap: 10px;
+  }
+  .admin-project-thumb,
+  .admin-project-thumb-placeholder {
+    width: 46px;
+    height: 36px;
+  }
+  .admin-project-name {
+    font-size: 0.84rem;
+  }
+  .admin-project-tags {
+    font-size: 0.65rem;
+  }
+
+  /* Stack form actions */
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .form-actions .btn-primary,
+  .form-actions .btn-outline {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .form-actions .delete-btn {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ── Small mobile (max 400px) ── */
+@media (max-width: 400px) {
+  .login-card {
+    padding: 22px 16px;
+    border-radius: 16px;
+  }
+
+  .admin-topbar-logo {
+    font-size: 1rem;
+  }
+
+  .admin-header h1 {
+    font-size: 0.95rem;
+  }
+  .admin-header p {
+    display: none; /* sub-label too narrow at this width */
+  }
+
+  .admin-project-item {
+    padding: 10px;
+    gap: 8px;
+  }
+  .admin-project-thumb,
+  .admin-project-thumb-placeholder {
+    width: 40px;
+    height: 32px;
+    border-radius: 6px;
+  }
+  .admin-project-name {
+    font-size: 0.8rem;
+  }
+  .admin-action-btn {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+
+  .field-input {
+    font-size: 0.85rem;
+    padding: 9px 12px;
+  }
+  .field-label {
+    font-size: 0.68rem;
+  }
+
+  .add-form-card {
+    padding: 14px 12px;
+  }
+
+  .image-drop-zone {
+    padding: 18px 10px;
+  }
+  .image-drop-zone p {
+    font-size: 0.8rem;
+  }
+
+  .drawer-panel {
+    width: 240px;
+  }
+}
+
+/* ── Ensure skeleton animation is smooth across all sizes ── */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.admin-skeleton::after {
+  animation: shimmer 1.5s infinite;
+}
